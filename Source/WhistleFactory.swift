@@ -117,7 +117,7 @@ open class WhistleFactory: UIViewController {
         NSString(string: text).boundingRect(
           with: CGSize(width: labelWidth, height: CGFloat.infinity),
           options: NSStringDrawingOptions.usesLineFragmentOrigin,
-          attributes: [NSAttributedString.Key.font: titleLabel.font],
+          attributes: [NSAttributedString.Key.font: titleLabel.font as Any],
           context: nil
         )
       titleLabelHeight = CGFloat(neededDimensions.size.height)
@@ -129,15 +129,15 @@ open class WhistleFactory: UIViewController {
     } else {
       titleLabel.sizeToFit()
     }
-
+    let extraHeight = (Dimensions.notchHeight > 0) ? Dimensions.notchHeight : titleLabel.safeYCoordinate
     whistleWindow.frame = CGRect(x: 0, y: 0,
                                  width: labelWidth,
-                                 height: titleLabelHeight + Dimensions.notchHeight)
+                                 height: titleLabelHeight + extraHeight)
     view.frame = whistleWindow.bounds
 
     titleLabel.frame = CGRect(
         x: 0.0,
-        y: Dimensions.notchHeight,
+        y: extraHeight,
         width: view.bounds.width,
         height: titleLabelHeight
     )
