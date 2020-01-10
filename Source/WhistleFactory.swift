@@ -129,7 +129,12 @@ open class WhistleFactory: UIViewController {
     } else {
       titleLabel.sizeToFit()
     }
-    let extraHeight = (Dimensions.notchHeight > 0) ? Dimensions.notchHeight : whistleWindow.safeYCoordinate
+    var notNotchHeight: CGFloat = 0.0
+    if #available(iOS 13.0, *) {
+        notNotchHeight = whistleWindow.safeYCoordinate
+    }
+    
+    let extraHeight = (Dimensions.notchHeight > 0) ? Dimensions.notchHeight : notNotchHeight
     whistleWindow.frame = CGRect(x: 0, y: 0,
                                  width: labelWidth,
                                  height: titleLabelHeight + extraHeight)
